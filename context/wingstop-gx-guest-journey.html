@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Wingstop GX · Guest Journey</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Expanded:wght@600;700;800;900&family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFFFF; --bg-tint:#F3F6F1; --bg-warm:#FAF9F4; --card:#FFFFFF;
+  --line:#E6EAE3; --line-strong:#D6DDD3;
+  --ink:#13180F; --ink-mid:#566055; --ink-lo:#8C958A;
+  --hunter:#006341; --hunter-deep:#064A30;
+  --green:#00B140; --green-hi:#00C247; --green-tint:#E6F7EC;
+  --gold:#FFB81C; --gold-tint:#FFF3D6; --gold-ink:#7A5200;
+  --pos:#0E8C44; --pos-tint:#E6F7EC;
+  --neu:#8A5B00; --neu-tint:#FFF3D6;
+  --neg:#C73327; --neg-tint:#FCEBE9;
+  --blue:#1F6FD0; --blue-tint:#E8F1FC;
+  --f-display:"Archivo Expanded","Arial Narrow",sans-serif;
+  --f-ui:"Inter",system-ui,-apple-system,sans-serif;
+  --f-mono:"Space Mono",ui-monospace,monospace;
+  --r-sm:8px; --r-md:12px; --r-lg:18px; --r-xl:24px; --r-pill:999px;
+  --sh1:0 1px 2px rgba(12,30,18,.06);
+  --sh2:0 8px 24px rgba(12,30,18,.08);
+  --sh3:0 22px 56px rgba(12,30,18,.14);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{animation:none!important;transition:none!important}}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-ui);font-size:15px;line-height:1.55;-webkit-font-smoothing:antialiased}
+::selection{background:var(--green);color:#fff}
+.wrap{max-width:1120px;margin:0 auto;padding:0 clamp(18px,4vw,40px)}
+
+.topbar{height:6px;background:linear-gradient(90deg,var(--hunter),var(--green) 60%,var(--gold))}
+
+/* hero */
+.hero{padding:54px 0 30px}
+.eyebrow{font-family:var(--f-mono);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--hunter)}
+.hero h1{font-family:var(--f-display);font-weight:900;font-size:clamp(32px,5.2vw,60px);line-height:.95;letter-spacing:-.01em;margin:14px 0 0;text-transform:uppercase}
+.hero h1 em{font-style:normal;color:var(--green)}
+.hero .rule{width:84px;height:5px;background:var(--gold);border-radius:3px;margin:20px 0 0}
+.hero p.lede{max-width:720px;color:var(--ink-mid);font-size:17px;margin:18px 0 0}
+
+/* persona */
+.persona{display:flex;gap:18px;align-items:center;background:linear-gradient(135deg,var(--green-tint),#fff);border:1px solid var(--line);border-radius:var(--r-lg);padding:18px 20px;margin-top:28px;box-shadow:var(--sh1);flex-wrap:wrap}
+.pf{width:58px;height:58px;border-radius:50%;background:var(--hunter);color:#fff;display:flex;align-items:center;justify-content:center;font-family:var(--f-display);font-weight:800;font-size:22px;flex:0 0 auto}
+.persona .nm{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:18px}
+.persona .meta{font-size:13px;color:var(--ink-mid)}
+.persona .scn{flex:1;min-width:240px;font-size:13.5px;color:var(--ink-mid);border-left:1px solid var(--line);padding-left:18px}
+.persona .scn b{color:var(--ink)}
+@media (max-width:640px){.persona .scn{border-left:none;padding-left:0;border-top:1px solid var(--line);padding-top:12px}}
+
+/* section */
+.section{padding:46px 0;border-top:1px solid var(--line)}
+.kicker{font-family:var(--f-mono);font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-lo)}
+.section h2{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:clamp(20px,2.8vw,30px);margin:8px 0 6px}
+.section .intro{max-width:720px;color:var(--ink-mid);margin:0 0 26px}
+
+/* emotion curve */
+.curve-card{background:var(--bg-warm);border:1px solid var(--line);border-radius:var(--r-lg);padding:22px;box-shadow:var(--sh1)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:10px}
+.legend button{display:inline-flex;align-items:center;gap:8px;font-family:var(--f-ui);font-size:13px;font-weight:600;background:none;border:none;cursor:pointer;color:var(--ink);padding:4px 6px;border-radius:8px}
+.legend button .sw{width:22px;height:4px;border-radius:2px;display:inline-block}
+.legend button[aria-pressed="false"]{opacity:.4}
+.curve-svg{width:100%;height:auto;display:block}
+.curve-x{display:grid;grid-template-columns:repeat(6,1fr);margin-top:6px}
+.curve-x span{font-family:var(--f-mono);font-size:10px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-mid);text-align:center}
+
+/* stages */
+.stage{display:grid;grid-template-columns:64px 1fr;gap:18px;padding:22px 0;border-bottom:1px solid var(--line)}
+.stage:last-child{border-bottom:none}
+.stage .num{width:48px;height:48px;border-radius:50%;background:var(--hunter);color:#fff;font-family:var(--f-display);font-weight:800;font-size:20px;display:flex;align-items:center;justify-content:center}
+.stage .nline{width:2px;flex:1;background:var(--line);margin:6px auto 0}
+.stage .col0{display:flex;flex-direction:column;align-items:center}
+.stage .name{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:18px;margin:0}
+.stage .does{color:var(--ink-mid);font-size:14px;margin:4px 0 14px}
+.chips{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:14px}
+.chip{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.02em;text-transform:uppercase;padding:4px 10px;border-radius:var(--r-pill);border:1px solid var(--line-strong);color:var(--ink-mid);background:#fff}
+.chip.touch{border-color:rgba(0,99,65,.3);color:var(--hunter);background:var(--green-tint)}
+.chip.kpi{border-color:rgba(255,184,28,.5);color:var(--gold-ink);background:var(--gold-tint)}
+.chip.sys{border-color:rgba(31,111,208,.3);color:var(--blue);background:var(--blue-tint)}
+.tnf{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tn,.nf{border:1px solid var(--line);border-radius:var(--r-md);padding:13px 15px;font-size:13.5px;box-shadow:var(--sh1)}
+.tn{background:#fff}
+.tn .h,.nf .h{font-family:var(--f-mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.tn .h{color:var(--neg)} .nf .h{color:var(--pos)}
+.tn p,.nf p{margin:0;color:var(--ink-mid)}
+.nf{background:var(--green-tint);border-color:rgba(0,177,64,.3)}
+.nf p{color:var(--ink)}
+@media (max-width:640px){.tnf{grid-template-columns:1fr}.stage{grid-template-columns:48px 1fr;gap:14px}}
+
+/* moment of truth */
+.mot{background:linear-gradient(160deg,var(--hunter),var(--hunter-deep));color:#fff;border-radius:var(--r-xl);padding:30px;display:grid;grid-template-columns:1fr 300px;gap:26px;align-items:center;box-shadow:var(--sh2)}
+.mot .kicker{color:var(--gold)}
+.mot h3{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:24px;margin:8px 0 10px;color:#fff}
+.mot p{color:rgba(255,255,255,.85);margin:0 0 14px;font-size:14.5px}
+.mot ul{margin:0;padding-left:18px;color:rgba(255,255,255,.9);font-size:13.5px}
+.mot li{margin-bottom:6px}
+.mot li b{color:var(--gold)}
+.phone{width:300px;border:9px solid #0E1A12;border-radius:34px;background:#fff;overflow:hidden;box-shadow:var(--sh3);justify-self:center}
+.phone .status{height:26px;background:var(--hunter)}
+.chat-head{display:flex;align-items:center;gap:9px;padding:11px 13px;background:#fff;border-bottom:1px solid var(--line)}
+.chat-head .nm{font-family:var(--f-display);font-weight:700;text-transform:uppercase;font-size:13px;color:var(--ink)}
+.chat-head .on{font-size:9px;color:var(--pos);font-family:var(--f-mono)}
+.chat{padding:13px;display:flex;flex-direction:column;gap:9px;background:#FAFBFA}
+.msg{max-width:86%;font-size:12.5px;line-height:1.4;padding:8px 11px;border-radius:13px}
+.msg.bot{align-self:flex-start;background:#EEF1EC;color:var(--ink);border-bottom-left-radius:5px}
+.msg.user{align-self:flex-end;background:var(--hunter);color:#fff;border-bottom-right-radius:5px;font-weight:500}
+.rcard{align-self:flex-start;width:100%;background:#fff;border:1px solid var(--line);border-radius:13px;border-bottom-left-radius:5px;overflow:hidden;box-shadow:var(--sh1)}
+.rcard .rh{padding:8px 11px;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--neu);background:var(--neu-tint);border-bottom:1px solid var(--line)}
+.rcard .opt{display:flex;justify-content:space-between;align-items:center;border:1px solid var(--line-strong);border-radius:8px;padding:8px 10px;font-size:12px;margin:8px}
+.rcard .opt .rec{font-family:var(--f-mono);font-size:8.5px;color:var(--hunter);border:1px solid var(--green);border-radius:var(--r-pill);padding:1px 6px}
+@media (max-width:760px){.mot{grid-template-columns:1fr}.phone{margin-top:8px}}
+
+/* closed loop */
+.loop{display:flex;flex-wrap:wrap;align-items:stretch;gap:10px}
+.node{flex:1;min-width:150px;background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:14px;box-shadow:var(--sh1);position:relative}
+.node .t{font-family:var(--f-display);font-weight:800;text-transform:uppercase;font-size:13px;color:var(--hunter)}
+.node p{margin:5px 0 0;font-size:12px;color:var(--ink-mid)}
+.node .ar{position:absolute;right:-13px;top:50%;transform:translateY(-50%);color:var(--green);font-weight:800;z-index:2}
+@media (max-width:760px){.node .ar{right:50%;top:auto;bottom:-15px;transform:translateX(50%) rotate(90deg)}}
+.loopback{margin-top:16px;display:flex;align-items:center;gap:10px;justify-content:center;font-family:var(--f-mono);font-size:12px;color:var(--hunter);background:var(--green-tint);border:1px dashed rgba(0,99,65,.4);border-radius:var(--r-pill);padding:10px 18px}
+
+/* KPI summary */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.kc{background:#fff;border:1px solid var(--line);border-radius:var(--r-md);padding:16px;box-shadow:var(--sh1)}
+.kc .l{font-size:11px;text-transform:uppercase;letter-spacing:.04em;color:var(--ink-lo)}
+.kc .v{font-family:var(--f-display);font-weight:800;font-size:26px;margin:6px 0 2px}
+.kc .d{font-family:var(--f-mono);font-size:11px;color:var(--pos)}
+
+footer{padding:30px 0 50px;color:var(--ink-lo);font-size:12px;font-family:var(--f-mono);border-top:1px solid var(--line)}
+</style>
+</head>
+<body>
+<div class="topbar"></div>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Wingstop · Guest Experience Transformation</div>
+    <h1>The Guest Journey<br><em>From Crave to Closed Loop</em></h1>
+    <div class="rule"></div>
+    <p class="lede">One member, one order that goes wrong, and the difference the GX transformation makes at every step the RFP set out to impact — ordering, receiving, the hiccup, getting help, resolution, and being heard. The same loop works for 1P and 3P guests across app, web, and messaging.</p>
+
+    <div class="persona">
+      <div class="pf">MA</div>
+      <div>
+        <div class="nm">Maya Alvarez</div>
+        <div class="meta">Wingstop Rewards · Gold tier · orders ~2× / month</div>
+      </div>
+      <div class="scn"><b>Tonight:</b> Maya orders a 20pc group pack on the Wingstop app for delivery — game night with friends. The order arrives missing a 10pc and one side. Here's how that plays out today vs. with the new GX platform.</div>
+    </div>
+  </header>
+
+  <!-- EMOTION CURVE -->
+  <section class="section">
+    <div class="kicker">The Emotional Arc</div>
+    <h2>Same Hiccup, Two Endings</h2>
+    <p class="intro">Today, a single mistake sends Maya into a frustrating dead end she never recovers from — and Wingstop never hears about it. With the GX platform, the dip becomes a service-recovery moment that turns a detractor into a promoter.</p>
+
+    <div class="curve-card">
+      <div class="legend">
+        <button id="lg-gx" aria-pressed="true"><span class="sw" style="background:var(--green)"></span>With Wingstop GX</button>
+        <button id="lg-today" aria-pressed="true"><span class="sw" style="background:#A8B0A4"></span>Today</button>
+      </div>
+      <svg class="curve-svg" viewBox="0 0 1000 320" role="img" aria-label="Guest sentiment across the journey, today versus with Wingstop GX">
+        <!-- gridlines -->
+        <line x1="40" y1="40" x2="40" y2="270" stroke="#E6EAE3"/>
+        <line x1="40" y1="270" x2="980" y2="270" stroke="#E6EAE3"/>
+        <text x="8" y="60" font-family="Space Mono" font-size="11" fill="#8C958A">:)</text>
+        <text x="8" y="160" font-family="Space Mono" font-size="11" fill="#8C958A">:|</text>
+        <text x="8" y="262" font-family="Space Mono" font-size="11" fill="#8C958A">:(</text>
+        <!-- moment of truth marker -->
+        <line x1="440" y1="40" x2="440" y2="270" stroke="#C73327" stroke-dasharray="4 5" opacity=".5"/>
+        <text x="448" y="52" font-family="Space Mono" font-size="10" fill="#C73327">MOMENT OF TRUTH</text>
+
+        <!-- TODAY line -->
+        <g id="today-line">
+          <polyline points="80,95 260,120 440,245 620,238 800,232 940,225" fill="none" stroke="#A8B0A4" stroke-width="3" stroke-dasharray="6 6" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#A8B0A4">
+            <circle cx="80" cy="95" r="5"/><circle cx="260" cy="120" r="5"/><circle cx="440" cy="245" r="5"/><circle cx="620" cy="238" r="5"/><circle cx="800" cy="232" r="5"/><circle cx="940" cy="225" r="5"/>
+          </g>
+          <text x="940" y="210" font-family="Inter" font-size="11" font-weight="600" fill="#7A8077" text-anchor="end">Leaves a 1★ review</text>
+        </g>
+
+        <!-- GX line -->
+        <g id="gx-line">
+          <polyline points="80,88 260,110 440,215 620,150 800,82 940,56" fill="none" stroke="#00B140" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+          <g fill="#00B140">
+            <circle cx="80" cy="88" r="6"/><circle cx="260" cy="110" r="6"/><circle cx="440" cy="215" r="6"/><circle cx="620" cy="150" r="6"/><circle cx="800" cy="82" r="6"/><circle cx="940" cy="56" r="6"/>
+          </g>
+          <text x="940" y="44" font-family="Inter" font-size="11" font-weight="700" fill="#0E8C44" text-anchor="end">Becomes a promoter</text>
+        </g>
+      </svg>
+      <div class="curve-x">
+        <span>1 · Order</span><span>2 · Receive</span><span>3 · Hiccup</span><span>4 · Get Help</span><span>5 · Resolve</span><span>6 · Heard</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section class="section">
+    <div class="kicker">Stage by Stage</div>
+    <h2>Where the RFP Lands</h2>
+    <p class="intro">Each step maps a guest action to the touchpoint, the KPI it moves, the system doing the work, and the gap between today and the future state.</p>
+
+    <!-- 1 -->
+    <div class="stage">
+      <div class="col0"><div class="num">1</div><div class="nline"></div></div>
+      <div>
+        <h3 class="name">Discover &amp; Order</h3>
+        <p class="does">Maya opens the Wingstop app, rebuilds her usual group pack, and checks out for delivery.</p>
+        <div class="chips">
+          <span class="chip touch">App · Web · DSP</span>
+          <span class="chip kpi">Ease of Ordering</span>
+          <span class="chip sys">Loyalty / CRM linkage</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>1P and 3P orders live in separate worlds; 3P guests are invisible to Wingstop. Ease of Ordering isn't tracked.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>Order is loyalty-ID linked from the start, so every later touch knows who Maya is. Ease of Ordering becomes a measured KPI.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="stage">
+      <div class="col0"><div class="num">2</div><div class="nline"></div></div>
+      <div>
+        <h3 class="name">Receive the Order</h3>
+        <p class="does">The driver drops off the bags. Maya starts unpacking for the table.</p>
+        <div class="chips">
+          <span class="chip touch">Store · Courier · KDS/POS</span>
+          <span class="chip kpi">Speed · Accuracy · Quality · Hospitality</span>
+          <span class="chip sys">QSC audits</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>The Ops scorecard rewards speed over accuracy and quality. Hospitality (HYPE) isn't consistently measured, so incentives are misaligned.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>Rebalanced KPIs measure Speed, Accuracy, Quality and Hospitality together — what actually drives the guest's experience.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="stage">
+      <div class="col0"><div class="num">3</div><div class="nline"></div></div>
+      <div>
+        <h3 class="name">The Hiccup · Moment of Truth</h3>
+        <p class="does">A 10pc and a side are missing. Friends are waiting; Maya's frustrated.</p>
+        <div class="chips">
+          <span class="chip touch">Any channel</span>
+          <span class="chip kpi">NPS at risk</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>1P guests call the store — no ticket is logged. 3P guests are bounced to DoorDash. No unified path, no record, no SLA.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>Every issue has one front door regardless of channel, and it's captured the moment it happens — nothing falls through.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="stage">
+      <div class="col0"><div class="num">4</div><div class="nline"></div></div>
+      <div>
+        <h3 class="name">Get Help · Self-Service</h3>
+        <p class="does">Maya taps Lil Ranchie in the app instead of calling anyone.</p>
+        <div class="chips">
+          <span class="chip touch">Lil Ranchie · in-app</span>
+          <span class="chip kpi">Deflection · CSAT</span>
+          <span class="chip sys">Order mgmt + CRM</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>No in-app help. The only option is the call center, driving avoidable volume and long waits — while competitors ship AI chat.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>Lil Ranchie instantly identifies the order, understands the issue in plain language, and starts resolving — no phone tag.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="stage">
+      <div class="col0"><div class="num">5</div><div class="nline"></div></div>
+      <div>
+        <h3 class="name">Resolve · Make It Right</h3>
+        <p class="does">Maya picks a refund for the missing items — and could've taken points or a remake instead.</p>
+        <div class="chips">
+          <span class="chip touch">Refund engine · Loyalty · Live agent</span>
+          <span class="chip kpi">Resolution time · SLA</span>
+          <span class="chip sys">Policy matrix</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>The federated refund model depends on Brand Partners, who delay or decline — leaving Maya with no escalation path.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>The policy matrix auto-approves an eligible refund on the spot, or hands off to a human with full context in one tap. BPs can't quietly decline.</p></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6 -->
+    <div class="stage">
+      <div class="col0"><div class="num">6</div></div>
+      <div>
+        <h3 class="name">Heard · Close the Loop</h3>
+        <p class="does">A short survey in her language pops up; Maya rates the recovery and earns points. Her feedback joins everything else Wingstop knows.</p>
+        <div class="chips">
+          <span class="chip touch">Survey · Dashboards</span>
+          <span class="chip kpi">NPS · Response rate</span>
+          <span class="chip sys">Survey platform → Snowflake</span>
+        </div>
+        <div class="tnf">
+          <div class="tn"><div class="h">Today</div><p>A long SMG survey with deliverability issues, no POS link, no reach to 3P guests — and reporting that takes weeks across fragmented tools.</p></div>
+          <div class="nf"><div class="h">With GX</div><p>A short, multilingual, points-incentivized survey feeds one source of truth in real time. GX, BPs and GMs see it and act — improving Maya's next visit.</p></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MOMENT OF TRUTH ZOOM -->
+  <section class="section">
+    <div class="kicker">Zoom · Stages 3–5</div>
+    <h2 style="margin-bottom:18px">The Recovery, In Maya's Hand</h2>
+    <div class="mot">
+      <div>
+        <div class="kicker">Why this moment wins the relationship</div>
+        <h3>One screen turns a detractor into a promoter</h3>
+        <p>The hiccup is unavoidable. What the RFP is really buying is the 90 seconds after it — and that's where the design earns its keep.</p>
+        <ul>
+          <li><b>Support-first:</b> no upsell, no ordering detour — it fixes the problem.</li>
+          <li><b>Policy-enforced:</b> the refund amount and "suggested" path come from the matrix, never an AI guess.</li>
+          <li><b>Loyalty-aware:</b> points and remake are first-class options.</li>
+          <li><b>Human, one tap:</b> escalation carries the full transcript — Maya never repeats herself.</li>
+          <li><b>Closed loop:</b> a ticket, a sentiment score, and the resolution all flow back to the platform.</li>
+        </ul>
+      </div>
+      <div class="phone">
+        <div class="status"></div>
+        <div class="chat-head">
+          <svg width="28" height="28" viewBox="0 0 96 96" aria-hidden="true"><rect x="30" y="8" width="36" height="12" rx="3" fill="#00B140"/><path d="M28 30c0-6 6-10 20-10s20 4 20 10v50c0 5-4 8-9 8H37c-5 0-9-3-9-8V30Z" fill="#fff" stroke="#E6EAE3"/><circle cx="43" cy="42" r="4.5" fill="#13180F"/><circle cx="59" cy="42" r="4.5" fill="#13180F"/><path d="M44 52c3 3 9 3 12 0" stroke="#00B140" stroke-width="3" fill="none" stroke-linecap="round"/></svg>
+          <div><div class="nm">Lil Ranchie</div><div class="on">● Assistant · replies instantly</div></div>
+        </div>
+        <div class="chat">
+          <div class="msg user">My 10pc and a side were missing</div>
+          <div class="msg bot">Ah, no good — I found order #WS-7741. Here's what I can do:</div>
+          <div class="rcard"><div class="rh">● Make it right</div>
+            <div class="opt"><span>Refund missing items — <b>$11.78</b></span><span class="rec">Suggested</span></div>
+            <div class="opt"><span>Add 350 loyalty points</span></div>
+            <div class="opt"><span>Remake for pickup</span></div>
+          </div>
+          <div class="msg user">Refund please</div>
+          <div class="msg bot">Done — $11.78 back to your card, and 50 pts for the trouble. Anything else, or want a teammate?</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CLOSED LOOP -->
+  <section class="section">
+    <div class="kicker">The Closed Loop</div>
+    <h2>Maya's Bad Night Makes the Next Guest's Better</h2>
+    <p class="intro">This is the thesis the RFP is reaching for: feedback doesn't dead-end in a dashboard, it drives action that improves the operation — and the next order.</p>
+
+    <div class="loop">
+      <div class="node"><div class="t">This Journey</div><p>Chat, refund, survey &amp; sentiment from Maya's order.</p><span class="ar">→</span></div>
+      <div class="node"><div class="t">One Record</div><p>Loyalty-ID-linked, cleansed, synced to Snowflake.</p><span class="ar">→</span></div>
+      <div class="node"><div class="t">Role Dashboards</div><p>GX, BP Leadership, GMs &amp; Call Center see the signal.</p><span class="ar">→</span></div>
+      <div class="node"><div class="t">Store Action</div><p>Store #0145 flagged for repeat missing-item errors.</p><span class="ar">→</span></div>
+      <div class="node"><div class="t">Next Guest</div><p>Fixed process — fewer hiccups, higher NPS.</p></div>
+    </div>
+    <div class="loopback">↺ &nbsp;The signal loops back — every interaction trains the operation</div>
+  </section>
+
+  <!-- KPI SUMMARY -->
+  <section class="section">
+    <div class="kicker">What Moves</div>
+    <h2>The CX Metrics This Journey Touches</h2>
+    <p class="intro">Every stage maps to a measurable outcome the RFP wants to improve.</p>
+    <div class="kpis">
+      <div class="kc"><div class="l">NPS</div><div class="v" style="color:var(--pos)">+42</div><div class="d">▲ recovery effect</div></div>
+      <div class="kc"><div class="l">Call deflection</div><div class="v" style="color:var(--hunter)">61%</div><div class="d">▲ self-service</div></div>
+      <div class="kc"><div class="l">CSAT post-resolution</div><div class="v">88%</div><div class="d">▲ make-it-right</div></div>
+      <div class="kc"><div class="l">Survey response</div><div class="v" style="color:var(--gold-ink)">3×</div><div class="d">short + incentive</div></div>
+      <div class="kc"><div class="l">Time to insight</div><div class="v">real-time</div><div class="d">from weeks</div></div>
+    </div>
+  </section>
+
+  <footer>WINGSTOP GX · GUEST JOURNEY · CRAVE TO CLOSED LOOP · FOR REFINEMENT · CONFIDENTIAL</footer>
+</div>
+
+<script>
+function toggle(btnId, groupId){
+  var b=document.getElementById(btnId), g=document.getElementById(groupId);
+  b.addEventListener('click',function(){
+    var on=b.getAttribute('aria-pressed')==='true';
+    b.setAttribute('aria-pressed', String(!on));
+    g.style.display = on ? 'none' : '';
+  });
+}
+toggle('lg-gx','gx-line');
+toggle('lg-today','today-line');
+</script>
+</body>
+</html>
